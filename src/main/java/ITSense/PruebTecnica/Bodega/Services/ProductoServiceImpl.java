@@ -21,4 +21,9 @@ public class ProductoServiceImpl implements IProdcutoService {
     public List<Producto> findAll() {
         return (List<Producto>) productosRepository.findAll();
     }
+
+    @Override
+    public Producto findById(Long id) {
+        return null;
+    }
 }
