@@ -11,10 +11,16 @@ public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
+
+
     private Date fechaIngreso;
+//    @PrePersist
+//    public void prePersist(){
+//        fechaIngreso=new Date();
+//    }
     @Column(nullable = true)
     private Date fechaRetiro;
     private Integer cantidad;
