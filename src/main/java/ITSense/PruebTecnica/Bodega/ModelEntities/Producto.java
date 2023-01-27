@@ -1,7 +1,7 @@
 package ITSense.PruebTecnica.Bodega.ModelEntities;
 
-import jakarta.persistence.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,8 +10,12 @@ import java.util.Date;
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+
+    //Id de la tabla
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    //Id Auto Increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
 

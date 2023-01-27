@@ -2,7 +2,6 @@ package ITSense.PruebTecnica.Bodega.Services;
 
 import ITSense.PruebTecnica.Bodega.ModelEntities.Producto;
 import ITSense.PruebTecnica.Bodega.Repository.IProductosRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

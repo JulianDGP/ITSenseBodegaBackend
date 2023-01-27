@@ -2,15 +2,12 @@ package ITSense.PruebTecnica.Bodega.RestControllers;
 
 import ITSense.PruebTecnica.Bodega.ModelEntities.Producto;
 import ITSense.PruebTecnica.Bodega.Services.IProductoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost"})
 @RestController
 @RequestMapping("/producto/api")
 public class ProductoRestController {
