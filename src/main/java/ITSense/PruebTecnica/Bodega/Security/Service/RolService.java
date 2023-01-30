@@ -11,7 +11,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class RolService {
-
     //Inyeccion de dependencia por constructor:
     private final RolRepository rolRepository;
     public RolService(RolRepository rolRepository) {
