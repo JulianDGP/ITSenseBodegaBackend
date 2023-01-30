@@ -10,7 +10,6 @@ import ITSense.PruebTecnica.Bodega.Security.Enums.RolNombre;
 import ITSense.PruebTecnica.Bodega.Security.Jwt.JwtProvider;
 import ITSense.PruebTecnica.Bodega.Security.Service.RolService;
 import ITSense.PruebTecnica.Bodega.Security.Service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,23 +30,26 @@ import java.util.Set;
 @CrossOrigin
 public class AuthController {
 
+    //Inyeccion de dependencia por constructor:
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
 
-    @Autowired
-    RolService rolService;
+    private final RolService rolService;
+    private final JwtProvider jwtProvider;
 
+    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UsuarioService usuarioService, RolService rolService, JwtProvider jwtProvider) {
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.usuarioService = usuarioService;
+        this.rolService = rolService;
+        this.jwtProvider = jwtProvider;
+    }
 
-    @Autowired
-    JwtProvider jwtProvider;
 
     @PostMapping("/nuevoUsuario")
     public ResponseEntity<?> nuevoUsuario(@Valid @RequestBody NuevoUsuario nuevoUsuario,
