@@ -3,13 +3,15 @@ package ITSense.PruebTecnica.Bodega.RestControllers;
 import ITSense.PruebTecnica.Bodega.ModelEntities.Producto;
 import ITSense.PruebTecnica.Bodega.Services.IProductoService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/producto/api")
+@CrossOrigin(origins = "http://localhost:4200/")
+@RequestMapping("/api/producto")
 public class ProductoRestController {
 //    @Autowired
 //    private IProductoService iProductoService;
@@ -26,7 +28,7 @@ public class ProductoRestController {
         return iProductoService.findAll();
     }
 
-    @GetMapping("/listar/{id}")
+    @GetMapping("/detalle/{id}")
     public Producto show(@PathVariable Long id) {
         return this.iProductoService.findById(id);
     }
@@ -40,14 +42,16 @@ public class ProductoRestController {
     }
 
     @PostMapping("/crear")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Producto create(@RequestBody Producto producto) {
-        producto.setFechaIngreso(new Date());
+//        producto.setFechaIngreso(new Date());
         this.iProductoService.save(producto);
         return producto;
     }
 
     @PutMapping("/editar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Producto update(@RequestBody Producto producto, @PathVariable Long id) {
         Producto productoActual = new Producto();
@@ -55,7 +59,7 @@ public class ProductoRestController {
             productoActual = iProductoService.findById(id);
             productoActual.setNombre(producto.getNombre());
             productoActual.setFechaIngreso(producto.getFechaIngreso());
-            productoActual.setFechaRetiro(producto.getFechaRetiro());
+            productoActual.setFechaRetiro(producto.getFechaRetiro()); //setFechaRetiro(new Date());
             productoActual.setCantidad(producto.getCantidad());
             productoActual.setDefectos(producto.getDefectos());
             productoActual.setElaboracion(producto.getElaboracion());
@@ -72,6 +76,7 @@ public class ProductoRestController {
     }
 
     @DeleteMapping("/borrar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         try {

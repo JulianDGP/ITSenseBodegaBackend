@@ -30,40 +30,35 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     //Hace las comprobaciones
     // Este metodo se hace cada vez que se le haga una peticion al sever
     @Autowired
-    private JwtProvider jwtProvider;
+    JwtProvider jwtProvider;
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
 
     //Obtenemos el token sin Bearer + el espacio
-    private String getToken(HttpServletRequest request){
-        String header = request.getHeader("Authorization");
-        if (header !=null && header.startsWith("Bearer")){
-            return header.replace("Bearer", "");
-        }else{
-            return null;
-        }
-
-    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req,
-                                    HttpServletResponse res,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
-
-            String token = getToken(req);
+            String token = getToken(request);
             if(token != null && jwtProvider.validateToken(token)){
                 String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
+
                 UserDetails userDetails = userDetailsService.loadUserByUsername(nombreUsuario);
+
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }catch (Exception e){
-            logger.error("Fallo en el metodo doFilter");
+            logger.error("Fallo en el metodo doFilter" + e.getMessage());
         }
-        filterChain.doFilter(req,res);
-
+        filterChain.doFilter(request,response);
+    }
+    private String getToken(HttpServletRequest request){
+        String header = request.getHeader("Authorization");
+        if (header !=null && header.startsWith("Bearer"))
+            return header.replace("Bearer", "");
+        return null;
     }
 }

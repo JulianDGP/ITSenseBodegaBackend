@@ -2,7 +2,6 @@ package ITSense.PruebTecnica.Bodega.Security.Jwt;
 
 import ITSense.PruebTecnica.Bodega.Security.Entity.UsuarioPrincipal;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +28,12 @@ public class JwtProvider {
 
         return Jwts.builder().setSubject(usuarioPrincipal.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + expiration*1000)).
-                signWith(SignatureAlgorithm.HS512, secret).compact();
+                .setExpiration(new Date(new Date().getTime() + expiration*1000))
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
     public String getNombreUsuarioFromToken(String token){
-        return Jwts.parser().setSigningKey(secret).parseClaimsJwt(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateToken(String token) {
@@ -51,7 +50,7 @@ public class JwtProvider {
         }catch (IllegalArgumentException e){
             logger.error("Token vacio");
         }catch (SignatureException e){
-            logger.error("Token vacio");
+            logger.error("Fallo con la firma");
         }
         return false;
     }

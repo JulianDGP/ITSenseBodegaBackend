@@ -1,6 +1,5 @@
 package ITSense.PruebTecnica.Bodega.Security.Entity;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;

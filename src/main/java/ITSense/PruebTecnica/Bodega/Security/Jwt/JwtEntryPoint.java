@@ -18,12 +18,12 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
     // Implementamos un logger para ver cual metodo da error en caso de falla
     private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 
-    @Override
-    public void commence(HttpServletRequest req,
-                         HttpServletResponse res,
-                         AuthenticationException authException) throws IOException, ServletException {
-    logger.error("Fallo el metodo commerce");
-    res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        logger.error("Fallo el metodo commerce");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
+
+
 }

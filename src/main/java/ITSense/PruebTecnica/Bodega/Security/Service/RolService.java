@@ -5,8 +5,8 @@ import ITSense.PruebTecnica.Bodega.Security.Enums.RolNombre;
 import ITSense.PruebTecnica.Bodega.Security.Repository.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
