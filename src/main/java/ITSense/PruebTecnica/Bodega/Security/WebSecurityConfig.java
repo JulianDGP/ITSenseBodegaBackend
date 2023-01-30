@@ -4,7 +4,6 @@ package ITSense.PruebTecnica.Bodega.Security;
 import ITSense.PruebTecnica.Bodega.Security.Jwt.JwtEntryPoint;
 import ITSense.PruebTecnica.Bodega.Security.Jwt.JwtTokenFilter;
 import ITSense.PruebTecnica.Bodega.Security.Service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,10 +22,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    JwtEntryPoint jwtEntryPoint;
+
+    //Inyeccion de dependencia por constructor:
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JwtEntryPoint jwtEntryPoint;
+
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, JwtEntryPoint jwtEntryPoint) {
+        this.userDetailsService = userDetailsService;
+        this.jwtEntryPoint = jwtEntryPoint;
+    }
 
     @Bean
     public JwtTokenFilter jwtTokenFilter(){

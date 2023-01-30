@@ -2,7 +2,6 @@ package ITSense.PruebTecnica.Bodega.Security.Service;
 
 import ITSense.PruebTecnica.Bodega.Security.Entity.Usuario;
 import ITSense.PruebTecnica.Bodega.Security.Repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,8 +11,13 @@ import java.util.Optional;
 @Transactional
 public class UsuarioService {
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
+
+    //Inyeccion de dependencia por constructor:
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public Optional<Usuario> getByUsuario(String nombreUsuario){
         return usuarioRepository.findByNombreUsuario(nombreUsuario);
